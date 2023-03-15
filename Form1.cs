@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Speech.Synthesis;
@@ -68,8 +69,40 @@ namespace EasyTTS
                     new Thread(new ParameterizedThreadStart(x => Utils.SpeakText(etext))).Start();
                 } else
                 {
+                    if (File.Exists(textBox1.Text))
+                    {
+                        if (MessageBox.Show("The selected output file already exists.\nAre you sure you want to overwrite it?","File warning",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.No)
+                        {
+                            label3.Text = "Ready";
+                            label3.Update();
+                            Application.DoEvents();
+                            return;
+                        }
+                    }
+                    try
+                    {
+                        if (!Directory.Exists(Path.GetDirectoryName(textBox1.Text)))
+                        {
+                            MessageBox.Show("Provided path cannot be written to", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            label3.Text = "Ready";
+                            label3.Update();
+                            Application.DoEvents();
+                            return;
+                        }
+                    } catch (Exception ex)
+                    {
+                        MessageBox.Show("Provided path cannot be written to", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        label3.Text = "Ready";
+                        label3.Update();
+                        Application.DoEvents();
+                        return;
+                    }
                     string efm = textBox1.Text;
+                    DateTime start = DateTime.Now;
                     new Thread(new ParameterizedThreadStart(x => Utils.WttsFile(efm,etext))).Start();
+                    DateTime end = DateTime.Now;
+                    double diff = (end - start).TotalMilliseconds;
+                    MessageBox.Show($"Wrote {new FileInfo(textBox1.Text).Length} bytes in {Math.Round(diff / 1000,3)} seconds ({(int)(new FileInfo(textBox1.Text).Length / (diff / 1000))} bytes per second)","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
                 //Utils.SpeakText(richTextBox1.Text);
             }
@@ -182,6 +215,17 @@ namespace EasyTTS
             {
                 textBox1.Text = saveFileDialog.FileName;
             }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            label10.Text = richTextBox1.Text.Split(' ').Length.ToString() + " Words";
+            label11.Text = richTextBox1.Text.Length.ToString() + " Characters";
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
