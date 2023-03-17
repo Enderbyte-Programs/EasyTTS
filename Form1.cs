@@ -98,11 +98,8 @@ namespace EasyTTS
                         return;
                     }
                     string efm = textBox1.Text;
-                    DateTime start = DateTime.Now;
                     new Thread(new ParameterizedThreadStart(x => Utils.WttsFile(efm,etext))).Start();
-                    DateTime end = DateTime.Now;
-                    double diff = (end - start).TotalMilliseconds;
-                    MessageBox.Show($"Wrote {new FileInfo(textBox1.Text).Length} bytes in {Math.Round(diff / 1000,3)} seconds ({(int)(new FileInfo(textBox1.Text).Length / (diff / 1000))} bytes per second)","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    
                 }
                 //Utils.SpeakText(richTextBox1.Text);
             }
@@ -226,6 +223,40 @@ namespace EasyTTS
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+        private void ntt(Control control,string text) {
+            ToolTip t = new ToolTip();
+            t.SetToolTip(control, text);
+        }
+
+        private void textBox1_MouseHover(object sender, EventArgs e)
+        {
+            ntt(this.textBox1, "The file to save the speech to (WAV audio)");
+        }
+
+        private void button5_MouseHover(object sender, EventArgs e)
+        {
+            ntt(button5, "Open a file dialogue to select a file");
+        }
+
+        private void comboBox1_MouseHover(object sender, EventArgs e)
+        {
+            ntt(comboBox1, "Select a voice to be used");
+        }
+
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            ntt(button1, "Go!");
+        }
+
+        private void button3_MouseHover(object sender, EventArgs e)
+        {
+            ntt(button3, "Pause or resume speech playback");
+        }
+
+        private void button4_MouseHover(object sender, EventArgs e)
+        {
+            ntt(button4, "Clear speech buffer. Use this if you want to stop audio");
         }
     }
 }

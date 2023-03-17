@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Speech.Synthesis;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;
 
 namespace EasyTTS
 {
@@ -70,6 +72,7 @@ namespace EasyTTS
         }
         public static void WttsFile(string filename,string text)
         {
+            DateTime start = DateTime.Now;
             if (!registered)
             {
                 synth.SpeakProgress += Synth_SpeakProgress;
@@ -81,7 +84,32 @@ namespace EasyTTS
             synth.Speak(text);
             synth.SetOutputToDefaultAudioDevice();
             f.SetStatusLabelText("Ready");
-            
+            DateTime end = DateTime.Now;
+            double diff = (end - start).TotalMilliseconds;
+            MessageBox.Show($"Wrote {ParseSize(new FileInfo(filename).Length)} bytes in {Math.Round(diff / 1000, 3)} seconds ({ParseSize((int)(new FileInfo(filename).Length / (diff / 1000)))} bytes per second)", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+        public static string ParseSize(long size)
+        {
+            bool isneg = size < 0;
+            if (isneg)
+            {
+                size = -size;
+            }
+            if (size > 2000000000)
+            {
+                return Math.Round((double)((double)size/1000000000D),2).ToString() + " GB";
+            } else if (size > 2000000)
+            {
+                return Math.Round((double)((double)size / 1000000D), 2).ToString() + " MB";
+            } else if (size > 2000)
+            {
+                return Math.Round((double)((double)size / 1000D), 2).ToString() + " KB";
+            } else
+            {
+                return size.ToString() + " bytes";
+            }
+
         }
     }
 }

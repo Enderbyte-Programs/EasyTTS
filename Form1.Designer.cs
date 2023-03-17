@@ -87,6 +87,7 @@
             this.button1.Text = "Speak";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.MouseHover += new System.EventHandler(this.button1_MouseHover);
             // 
             // button2
             // 
@@ -128,6 +129,7 @@
             this.button3.Text = "Pause/Resume";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.MouseHover += new System.EventHandler(this.button3_MouseHover);
             // 
             // button4
             // 
@@ -139,6 +141,7 @@
             this.button4.Text = "Clear Speech Buffer";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.MouseHover += new System.EventHandler(this.button4_MouseHover);
             // 
             // numericUpDown1
             // 
@@ -199,6 +202,7 @@
             this.comboBox1.Size = new System.Drawing.Size(350, 28);
             this.comboBox1.TabIndex = 12;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.MouseHover += new System.EventHandler(this.comboBox1_MouseHover);
             // 
             // comboBox2
             // 
@@ -245,6 +249,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(314, 26);
             this.textBox1.TabIndex = 17;
+            this.textBox1.MouseHover += new System.EventHandler(this.textBox1_MouseHover);
             // 
             // button5
             // 
@@ -255,6 +260,7 @@
             this.button5.Text = "...";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button5.MouseHover += new System.EventHandler(this.button5_MouseHover);
             // 
             // label9
             // 
@@ -263,7 +269,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(269, 20);
             this.label9.TabIndex = 19;
-            this.label9.Text = "Version 1.1 | By Enderbyte Programs";
+            this.label9.Text = "Version 1.2 | By Enderbyte Programs";
             // 
             // label10
             // 
