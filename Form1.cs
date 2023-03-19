@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Threading;
@@ -257,6 +258,45 @@ namespace EasyTTS
         private void button4_MouseHover(object sender, EventArgs e)
         {
             ntt(button4, "Clear speech buffer. Use this if you want to stop audio");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog d = new OpenFileDialog();
+            d.Title = "Please choose a file to open";
+            //d.Filter = "*|All Files|*.txt|Text Files";
+            d.Multiselect = false;
+            //d.FilterIndex = 0;
+            DialogResult dx = d.ShowDialog();
+            if (dx == DialogResult.OK)
+            {
+                byte[] xdata = File.ReadAllBytes(d.FileName);
+                string rttf = Encoding.UTF8.GetString(xdata);
+                if (checkBox1.Checked)
+                {
+                    richTextBox1.Text += rttf;
+                } else
+                {
+                    richTextBox1.Text = rttf;
+                }
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Form2 f = new Form2();
+            f.ShowDialog(this);
+            if (f.exitedwell)
+            {
+                if (checkBox1.Checked)
+                {
+                    richTextBox1.Text += f.GetSelectedURL();
+                } else
+                {
+                    richTextBox1.Text = f.GetSelectedURL();
+                }
+            }
+            
         }
     }
 }
